@@ -38,14 +38,20 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
+        'qiniu'=>[
+            'class'=>\backend\components\Qiniu::className(),
+            'up_host'=> 'http://up-z2.qiniu.com/',
+            'accessKey'=>'w8yJxLDVymdtbNjQyDV80XcmKAFMJyuw2fOn1R7n',
+            'secretKey' => 'nRjYm5KaxuhuX4K5RRY2dtDPaoHaNs4bl39fJuvi',
+            'bucket' =>'php0217',
+            'domain' => 'http://or9qbn08z.bkt.clouddn.com/',
+        ],
     ],
     'params' => $params,
 ];

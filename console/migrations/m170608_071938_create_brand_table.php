@@ -24,7 +24,7 @@ class m170608_071938_create_brand_table extends Migration
             'sort'=>$this->integer(11)->comment('排序'),
 //status int﴿2﴾ 状态﴿常正1 藏隐0 除删1‐﴾
             'status'=>$this->smallInteger(2)->comment('状态'),
-        ]);
+        ],'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB');
     }
 
     /**
