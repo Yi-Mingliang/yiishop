@@ -17,7 +17,7 @@
         <td><?=$model->id?></td>
         <td><?=$model->name?></td>
         <td><?php if ($model->logo){?>
-            <img src="<?=Yii::getAlias('@web').$model->logo?>" width="80px"/>
+            <img src="<?=$model->logo?>" width="80px"/>
             <?php }?>
         </td>
         <td><?=$model->intro?></td>
