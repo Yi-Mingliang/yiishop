@@ -29,7 +29,7 @@ function(file, data, response) {
         //$("#brand-logo").val(data.fileUrl);
         //$("#img").attr("src",data.fileUrl);
         var html='<tr data-id="'+data.goods_id+'" id="gallery_'+data.goods_id+'">';
-        html += '<td><img src="'+data.fileUrl+'" /></td>';
+        html += '<td><img src="'+Yii::getAlias('@web').data.fileUrl+'" /></td>';
         html += '<td><button type="button" class="btn btn-danger del_btn">删除</button></td>';
         html += '</tr>';
         $("table").append(html);
