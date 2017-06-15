@@ -40,7 +40,7 @@ EOF
 if($model->logo){
     echo \yii\helpers\Html::img(Yii::getAlias('@web').$model->logo,['width'=>'80px','id'=>'img_logo1']);
 }else{
-    echo \yii\helpers\Html::img(Yii::getAlias('@web').'',['width'=>'80px','style'=>'display:none','id'=>'img_logo']);
+    echo \yii\helpers\Html::img('',['width'=>'80px','style'=>'display:none','id'=>'img_logo']);
 }
 echo $form->field($model,'brand_id')->dropDownList(\yii\helpers\ArrayHelper::map($brand,'id','name'),['prompt'=>'请选择商品品牌']);
 echo $form->field($model,'goods_category_id')->hiddenInput();
