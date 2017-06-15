@@ -1,7 +1,6 @@
 <?php
 use yii\web\JsExpression;
 
-
 $form=\yii\bootstrap\ActiveForm::begin();
 echo $form->field($model,'name');
 echo $form->field($model,'logo')->hiddenInput();
