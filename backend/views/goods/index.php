@@ -39,7 +39,7 @@
         <td><?=$model->id?></td>
         <td><?=$model->name?></td>
         <td><?=$model->sn?></td>
-        <td><img src="<?=$model->logo?>"/></td>
+        <td><img src="<?=Yii::getAlias('@web').$model->logo?>"/></td>
         <td><?=$model->goodsCategory->name?></td>
         <td><?=$model->brand->name?></td>
         <td><?=$model->market_price ?></td>
