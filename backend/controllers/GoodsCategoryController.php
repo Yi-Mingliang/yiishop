@@ -8,7 +8,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\Request;
 
 
-class GoodsCategoryController extends \yii\web\Controller
+class GoodsCategoryController extends BackendController
 {
     public function actionIndex()
     {
@@ -70,14 +70,14 @@ class GoodsCategoryController extends \yii\web\Controller
             //接收数据
             $model->load($request->post());
             if($model->validate()){
-                //判断是否是添加一级分类
+                //判断是否是一级分类
                 if($model->parent_id){//添加非一级分类
                     //找到父节点
                     $parent=GoodsCategory::findOne(['id'=>$model->parent_id]);
                     $model->prependTo( $parent);
                 }else{
                     //判断是否已经是一级分类
-                    if($model->oldAttributes('parent_id')){
+                    if(!$model->oldAttributes['parent_id']){
                         $model->save();
                     }else{
                         //添加一级分类

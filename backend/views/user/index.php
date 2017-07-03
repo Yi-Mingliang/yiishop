@@ -1,6 +1,9 @@
 <p>
-    <?=\yii\bootstrap\Html::a('添加账号',['user/add'],['class'=>'btn btn-success'])?>
-    <?=\yii\bootstrap\Html::a('修改密码',['user/password-edit'],['class'=>'btn btn-info'])?>
+    <?php
+    if(Yii::$app->user->can('user/add')){
+        echo  \yii\bootstrap\Html::a('添加账号',['user/add'],['class'=>'btn btn-success']);
+    }
+   ?>
 </p>
 <table class="table table-bordered table-hover">
     <tr>
@@ -23,8 +26,13 @@
         <td><?=date('Y-m-d H:i:s',$user->last_time)?></td>
         <td><?=$user->last_ip?></td>
         <td>
-            <?=\yii\bootstrap\Html::a('修改',['user/edit','id'=>$user->id],['class'=>'btn btn-xs btn-primary glyphicon glyphicon-edit'])?>
-            <?=\yii\bootstrap\Html::a('删除',['user/del','id'=>$user->id],['class'=>'btn btn-xs  btn-danger glyphicon glyphicon-trash'])?>
+            <?php
+            if(Yii::$app->user->can('user/edit')) {
+                echo \yii\bootstrap\Html::a('修改', ['user/edit', 'id' => $user->id], ['class' => 'btn btn-xs btn-primary glyphicon glyphicon-edit']);
+            }
+            if(Yii::$app->user->can('user/del')){
+            echo \yii\bootstrap\Html::a('删除',['user/del','id'=>$user->id],['class'=>'btn btn-xs  btn-danger glyphicon glyphicon-trash']);
+            }?>
         </td>
         <?php endforeach;?>
     </tr>

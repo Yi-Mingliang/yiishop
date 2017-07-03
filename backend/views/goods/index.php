@@ -1,6 +1,8 @@
-
-
-<?=\yii\bootstrap\Html::a('添加商品',['goods/add'],['class'=>'btn btn-success'])?>
+<?php
+if(Yii::$app->user->can('goods/add')){
+    echo \yii\bootstrap\Html::a('添加商品',['goods/add'],['class'=>'btn btn-success']);
+}
+?>
 <?php
     $form=\yii\bootstrap\ActiveForm::begin([
             'method'=>'get',
@@ -49,10 +51,18 @@
         <td><?=\backend\models\Goods::$statusOpention[$model->status]?></td>
         <td><?=date('Y-m-d H:i:s',$model->create_time)?></td>
         <td>
-            <?=\yii\bootstrap\Html::a('修改',['goods/edit','id'=>$model->id],['class'=>'btn btn-xs btn-primary glyphicon glyphicon-edit'])?>
-            <?=\yii\bootstrap\Html::a('删除',['goods/del','id'=>$model->id],['class'=>'btn btn-xs  btn-danger glyphicon glyphicon-trash'])?>
-            <?=\yii\bootstrap\Html::a('相册',['goods/show','id'=>$model->id],['class'=>'btn btn-xs  btn-info glyphicon glyphicon-picture'])?>
-        </td>
+            <?php
+            if(Yii::$app->user->can('goods/edit')){
+                echo  \yii\bootstrap\Html::a('修改',['goods/edit','id'=>$model->id],['class'=>'btn btn-xs btn-primary glyphicon glyphicon-edit']);
+            }
+            if(Yii::$app->user->can('goods/edit')) {
+                echo \yii\bootstrap\Html::a('删除', ['goods/del', 'id' => $model->id], ['class' => 'btn btn-xs  btn-danger glyphicon glyphicon-trash']);
+            }
+            if(Yii::$app->user->can('goods/edit')) {
+                echo \yii\bootstrap\Html::a('相册', ['goods/show', 'id' => $model->id], ['class' => 'btn btn-xs  btn-info glyphicon glyphicon-picture']);
+            }
+            ?>
+            </td>
     </tr>
     <?php endforeach;?>
 </table>

@@ -1,4 +1,7 @@
-<p><?=\yii\bootstrap\Html::a('添加文章类型',['article_category/add'],['class'=>'btn btn-success'])?></p>
+<?php if (Yii::$app->user->can('article_category/add')){
+    echo \yii\bootstrap\Html::a('添加文章类型',['article_category/add'],['class'=>'btn btn-success']);
+}
+?>
 <table class="table table-bordered table-hover">
     <tr>
         <th>ID</th>
@@ -17,8 +20,15 @@
         <td><?=$model->sort?></td>
         <td><?=\backend\models\Article_Category::$statusOptions[$model->status]?></td>
         <td><?=\backend\models\Article_Category::$is_helpOptions[$model->is_help]?></td>
-        <td><?=\yii\bootstrap\Html::a('',['article_category/edit','id'=>$model->id],['class'=>'btn btn-xs btn-primary glyphicon glyphicon-edit'])?>
-            <?=\yii\bootstrap\Html::a('',['article_category/del','id'=>$model->id],['class'=>'btn btn-xs  btn-danger glyphicon glyphicon-trash'])?>
+        <td>
+            <?php
+            if(Yii::$app->user->can('article_category/edit')){
+                echo \yii\bootstrap\Html::a('',['article_category/edit','id'=>$model->id],['class'=>'btn btn-xs btn-primary glyphicon glyphicon-edit']);
+            }
+            if(Yii::$app->user->can('article_category/del')){
+                echo \yii\bootstrap\Html::a('',['article_category/del','id'=>$model->id],['class'=>'btn btn-xs  btn-danger glyphicon glyphicon-trash']);
+            }
+            ?>
         </td>
     </tr>
     <?php endforeach;?>

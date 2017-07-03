@@ -19,7 +19,7 @@ return [
         ],
         'user' => [
             'identityClass' => 'backend\models\User',
-            'loginUrl'=>'login',
+            'loginUrl'=>['user/login'],
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],

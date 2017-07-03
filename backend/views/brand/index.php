@@ -1,4 +1,8 @@
-<p><?=\yii\bootstrap\Html::a('添加品牌',['brand/add'],['class'=>'btn btn-success'])?></p>
+<p><?php
+    if(Yii::$app->user->can('article_detail/add')){
+        echo  \yii\bootstrap\Html::a('添加品牌',['brand/add'],['class'=>'btn btn-success']);
+    }
+   ?></p>
 <table class="table table-bordered table-hover">
     <tr>
         <th>ID</th>
@@ -23,8 +27,15 @@
         <td><?=$model->intro?></td>
         <td><?=$model->sort?></td>
         <td><?=\backend\models\Brand::$statusOptions[$model->status]?></td>
-        <td><?=\yii\bootstrap\Html::a('',['brand/edit','id'=>$model->id],['class'=>'btn btn-xs btn-primary glyphicon glyphicon-edit'])?>
-        <?=\yii\bootstrap\Html::a('',['brand/del','id'=>$model->id],['class'=>'btn btn-xs  btn-danger glyphicon glyphicon-trash'])?>
+        <td>
+            <?php
+            if(Yii::$app->user->can('brand/edit')){
+                echo  \yii\bootstrap\Html::a('',['brand/edit','id'=>$model->id],['class'=>'btn btn-xs btn-primary glyphicon glyphicon-edit']);
+            }
+            if(Yii::$app->user->can('brand/del')) {
+                echo \yii\bootstrap\Html::a('', ['brand/del', 'id' => $model->id], ['class' => 'btn btn-xs  btn-danger glyphicon glyphicon-trash']);
+            }
+            ?>
         </td>
     </tr>
     <?php endforeach;?>

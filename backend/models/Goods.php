@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use frontend\models\Cart;
 use Yii;
 
 /**
@@ -35,6 +36,12 @@ class Goods extends \yii\db\ActiveRecord
     public function getAlbum(){
         return $this->hasmany(GoodsAlbum::className(),['goods_id'=>'id']);
     }
+
+    //定义一个get方法  建立与购物清单表的连接  1对1
+    public function getCart(){
+        return $this->hasOne(Cart::className(),['goods_id'=>'id']);
+    }
+
 
     //定义一个静态的字段属性
     static public $saleOpention=['1'=>'在售','0'=>'下架'];

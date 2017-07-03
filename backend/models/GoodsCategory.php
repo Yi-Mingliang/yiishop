@@ -85,4 +85,9 @@ class GoodsCategory extends \yii\db\ActiveRecord
     public function getParent(){
         return $this->hasOne(self::className(),['id'=>'parent_id']);
     }
+
+
+    public function getChildren($id){
+        return self::findAll(['parent_id'=>$id]);
+    }
 }

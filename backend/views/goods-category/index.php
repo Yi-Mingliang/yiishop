@@ -1,4 +1,7 @@
-<p><?=\yii\bootstrap\Html::a('添加文章类型',['goods-category/add'],['class'=>'btn btn-success'])?></p>
+<p><?php
+    if(Yii::$app->user->can('goods-category/add')) {
+        echo \yii\bootstrap\Html::a('添加商品分类', ['goods-category/add'], ['class' => 'btn btn-success']);
+    }?></p>
 <table class="list table table-bordered table-hover"  >
     <thead>
         <tr>
@@ -15,8 +18,13 @@
                 <?=str_repeat(' — ',$model->depth).$model->name?>
                 <span class="glyphicon glyphicon-chevron-down expend" style="float: right"></span>
             </td>
-            <td><?=\yii\bootstrap\Html::a('',['goods-category/edit','id'=>$model->id],['class'=>'btn btn-xs btn-primary glyphicon glyphicon-edit'])?>
-                &emsp;<?=\yii\bootstrap\Html::a('',['goods-category/del','id'=>$model->id],['class'=>'btn btn-xs  btn-danger glyphicon glyphicon-trash'])?>
+            <td><?php
+                if(Yii::$app->user->can('goods-category/edit')){
+                   echo \yii\bootstrap\Html::a('',['goods-category/edit','id'=>$model->id],['class'=>'btn btn-xs btn-primary glyphicon glyphicon-edit']);
+                }
+                if(Yii::$app->user->can('goods-category/del')) {
+                    echo \yii\bootstrap\Html::a('', ['goods-category/del', 'id' => $model->id], ['class' => 'btn btn-xs  btn-danger glyphicon glyphicon-trash']);
+                }?>
             </td>
         </tr>
     <?php endforeach;?>

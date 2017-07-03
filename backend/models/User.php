@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Symfony\Component\Yaml\Yaml;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -21,8 +22,22 @@ use yii\web\IdentityInterface;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
-    static public $statusOptions=[1=>'正常',2=>'删除'];
+    public $roles=[];
 
+    static public $statusOptions=[1=>'正常',2=>'删除'];
+    //获取所有的角色
+    public static function getRoles(){
+        $authManager=Yii::$app->authManager;
+        return ArrayHelper::map($authManager->getRoles(),'name','description');
+    }
+
+    //获取要修改的角色
+    public function loadData($id){
+        $roles=Yii::$app->authManager->getRolesByUser($id);
+        foreach ($roles as $role){
+            $this->roles[]=$role->name;
+        }
+    }
 
     public function beforeSave($insert)
     {
@@ -67,6 +82,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['username'], 'unique'],
             [['email'], 'unique'],
             ['email','email'],
+            ['roles','safe']
         ];
     }
 
@@ -84,6 +100,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'status' => '状态',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'roles'=>'角色'
         ];
     }
 

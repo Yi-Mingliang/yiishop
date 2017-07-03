@@ -1,5 +1,10 @@
-<p><?=\yii\bootstrap\Html::a('添加文章类型',['article/add'],['class'=>'btn btn-success'])?></p>
-<table class="table table-bordered table-hover">
+<?php
+if(Yii::$app->user->can('article/add')){
+    echo \yii\bootstrap\Html::a('添加文章类型',['article/add'],['class'=>'btn btn-success']);
+}
+
+?>
+    <table class="table table-bordered table-hover">
     <tr>
         <th>ID</th>
         <th>名称</th>
@@ -19,9 +24,13 @@
             <td><?=$model->sort?></td>
             <td><?=\backend\models\Article::$statusOptions[$model->status]?></td>
             <td><?=date('Y-m-d H:i:s',$model->create_time)?></td>
-            <td><?=\yii\bootstrap\Html::a('',['article/edit','id'=>$model->id],['class'=>'btn btn-xs btn-primary glyphicon glyphicon-edit'])?>
-                <?=\yii\bootstrap\Html::a('',['article/del','id'=>$model->id],['class'=>'btn btn-xs  btn-danger glyphicon glyphicon-trash'])?>
-                <?=\yii\bootstrap\Html::a('查看文章详情',['article/detail','id'=>$model->id],['class'=>'btn btn-xs  btn-info'])?>
+            <td>
+                <?php
+                if(Yii::$app->user->can('article/edit')){echo \yii\bootstrap\Html::a('',['article/edit','id'=>$model->id],['class'=>'btn btn-xs btn-primary glyphicon glyphicon-edit']);}?>
+                <?php
+                if(Yii::$app->user->can('article/del')){echo \yii\bootstrap\Html::a('',['article/del','id'=>$model->id],['class'=>'btn btn-xs  btn-danger glyphicon glyphicon-trash']);}?>
+                <?php
+                if(Yii::$app->user->can('article/detail')){echo \yii\bootstrap\Html::a('查看文章详情',['article/detail','id'=>$model->id],['class'=>'btn btn-xs  btn-info']);}?>
             </td>
         </tr>
     <?php endforeach;?>

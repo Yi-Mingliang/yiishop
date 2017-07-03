@@ -10,7 +10,7 @@ use yii\web\Request;
 use yii\web\UploadedFile;
 use xj\uploadify\UploadAction;
 use crazyfd\qiniu\Qiniu;
-class BrandController extends \yii\web\Controller
+class BrandController extends BackendController
 {
     //显示列表
     public function actionIndex()
