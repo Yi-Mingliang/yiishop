@@ -27,26 +27,26 @@ class GoodsController extends BackendController
         //静态化商品模型 获取所有的分类
         $query=Goods::find()->andWhere(['=','status','1']);
       //sphinxClient  全文搜索
-        if($keyword =\Yii::$app->request->get()['GoodsSearchForm']['name']){
-            $cl = new SphinxClient();//实例化组件 SphinxClient
-            $cl->SetServer ( '127.0.0.1', 9312);
-            $cl->SetConnectTimeout ( 10 );
-            $cl->SetArrayResult ( true );
-            $cl->SetMatchMode ( SPH_MATCH_ALL);
-            $cl->SetLimits(0, 1000);
-            $res = $cl->Query($keyword, 'goods');//shopstore_search
-            //var_dump($res['matches']);exit;
-            if(!isset($res['matches'])){
-//                throw new NotFoundHttpException('没有找到xxx商品');
-                $query->where(['id'=>0]);
-            }else{
-
-                //获取商品id
-                //var_dump($res);exit;
-                $ids = ArrayHelper::map($res['matches'],'id','id');
-                $query->where(['in','id',$ids]);
-            }
-        }
+//        if($keyword =\Yii::$app->request->get()['GoodsSearchForm']['name']){
+//            $cl = new SphinxClient();//实例化组件 SphinxClient
+//            $cl->SetServer ( '127.0.0.1', 9312);
+//            $cl->SetConnectTimeout ( 10 );
+//            $cl->SetArrayResult ( true );
+//            $cl->SetMatchMode ( SPH_MATCH_ALL);
+//            $cl->SetLimits(0, 1000);
+//            $res = $cl->Query($keyword, 'goods');//shopstore_search
+//            //var_dump($res['matches']);exit;
+//            if(!isset($res['matches'])){
+////                throw new NotFoundHttpException('没有找到xxx商品');
+//                $query->where(['id'=>0]);
+//            }else{
+//
+//                //获取商品id
+//                //var_dump($res);exit;
+//                $ids = ArrayHelper::map($res['matches'],'id','id');
+//                $query->where(['in','id',$ids]);
+//            }
+//        }
 
 
 
@@ -57,23 +57,23 @@ class GoodsController extends BackendController
             'defaultPageSize'=>2,
         ]);
         //接收表单提交过来的查询参数
-        //$goodsSearch->search($query);
-        //限制输出  从什么位置输出  输出多少条
-        $models=$query->offset($page->offset)->limit($page->limit)->all();
-        $keywords = array_keys($res['words']);
-        $options = array(
-            'before_match' => '<span style="color:red;">',
-            'after_match' => '</span>',
-            'chunk_separator' => '...',
-            'limit' => 80, //如果内容超过80个字符，就使用...隐藏多余的的内容
-        );
+        $goodsSearch->search($query);
+//        //限制输出  从什么位置输出  输出多少条
+       $models=$query->offset($page->offset)->limit($page->limit)->all();
+//        $keywords = array_keys($res['words']);
+//        $options = array(
+//            'before_match' => '<span style="color:red;">',
+//            'after_match' => '</span>',
+//            'chunk_separator' => '...',
+//            'limit' => 80, //如果内容超过80个字符，就使用...隐藏多余的的内容
+//        );
 //关键字高亮
 //        var_dump($models);exit;
-        foreach ($models as $index => $item) {
-            $name = $cl->BuildExcerpts([$item->name], 'goods', implode(',', $keywords), $options); //使用的索引不能写*，关键字可以使用空格、逗号等符号做分隔，放心，sphinx很智能，会给你拆分的
-            $models[$index]->name = $name[0];
-//            var_dump($name);
-        }
+//        foreach ($models as $index => $item) {
+//            $name = $cl->BuildExcerpts([$item->name], 'goods', implode(',', $keywords), $options); //使用的索引不能写*，关键字可以使用空格、逗号等符号做分隔，放心，sphinx很智能，会给你拆分的
+//            $models[$index]->name = $name[0];
+////            var_dump($name);
+//        }
 
 
         return $this->render('index',['models'=>$models,'page'=>$page,'goodsSearch'=>$goodsSearch]);
